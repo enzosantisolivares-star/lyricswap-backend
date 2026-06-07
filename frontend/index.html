@@ -3,321 +3,301 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>LyricSwap — AI Voice Remix</title>
+<title>LyricSwap</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0a0a0f;color:#e8e0f0;font-family:'DM Sans',sans-serif;min-height:100vh}
-.bg-mesh{position:fixed;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 20%,rgba(138,80,200,.18) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 80% 70%,rgba(90,40,160,.14) 0%,transparent 60%);pointer-events:none;z-index:0}
-.app{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 24px 60px}
-.header{display:flex;align-items:center;justify-content:space-between;padding:28px 0 40px;border-bottom:1px solid rgba(138,80,200,.2);margin-bottom:40px}
+.mesh{position:fixed;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 20%,rgba(138,80,200,.18) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 80% 70%,rgba(90,40,160,.14) 0%,transparent 60%);pointer-events:none;z-index:0}
+.app{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 24px 60px}
+.header{display:flex;align-items:center;justify-content:space-between;padding:28px 0 36px;border-bottom:1px solid rgba(138,80,200,.2);margin-bottom:36px}
 .logo{display:flex;align-items:center;gap:12px}
 .logo-icon{width:42px;height:42px;background:linear-gradient(135deg,#9b4ddb,#6a1fa8);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.logo-text{font-size:22px;font-weight:700;background:linear-gradient(135deg,#c084fc,#9333ea,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.logo-sub{font-size:11px;color:rgba(180,130,255,.6);text-transform:uppercase;letter-spacing:2px;font-weight:500}
-.status-badge{display:flex;align-items:center;gap:8px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:20px;padding:6px 14px;font-size:12px;color:#4ade80;font-weight:500;transition:all .3s}
-.status-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pulse-dot 2s infinite}
-@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-.main-card{background:rgba(255,255,255,.03);border:1px solid rgba(138,80,200,.25);border-radius:20px;overflow:hidden}
-.card-header{background:linear-gradient(135deg,rgba(138,80,200,.15),rgba(80,40,140,.08));padding:28px 32px 24px;border-bottom:1px solid rgba(138,80,200,.15)}
-.card-title{font-size:18px;font-weight:700;color:#e8d5ff;margin-bottom:6px}
-.card-desc{font-size:13px;color:rgba(200,160,255,.6);line-height:1.5}
-.card-body{padding:32px;display:flex;flex-direction:column;gap:24px}
-.field{display:flex;flex-direction:column;gap:8px}
-.field-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(180,130,255,.7);display:flex;align-items:center;gap:6px}
-input[type=text],input[type=file],textarea{background:rgba(0,0,0,.4);border:1px solid rgba(138,80,200,.25);border-radius:12px;padding:14px 18px;color:#e8e0f0;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;width:100%;transition:border-color .2s,box-shadow .2s}
-input[type=text]:focus,textarea:focus{border-color:rgba(168,85,247,.6);background:rgba(0,0,0,.6);box-shadow:0 0 0 3px rgba(168,85,247,.1)}
+.logo-text{font-size:22px;font-weight:700;background:linear-gradient(135deg,#c084fc,#9333ea);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.logo-sub{font-size:11px;color:rgba(180,130,255,.5);text-transform:uppercase;letter-spacing:2px}
+.badge{display:flex;align-items:center;gap:8px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:20px;padding:6px 14px;font-size:12px;color:#4ade80;font-weight:500}
+.dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+.card{background:rgba(255,255,255,.03);border:1px solid rgba(138,80,200,.25);border-radius:20px;overflow:hidden}
+.card-head{background:linear-gradient(135deg,rgba(138,80,200,.15),rgba(80,40,140,.08));padding:24px 28px;border-bottom:1px solid rgba(138,80,200,.15)}
+.card-head h2{font-size:17px;font-weight:700;color:#e8d5ff;margin-bottom:4px}
+.card-head p{font-size:13px;color:rgba(200,160,255,.6);line-height:1.5}
+.card-body{padding:28px;display:flex;flex-direction:column;gap:20px}
+.field{display:flex;flex-direction:column;gap:7px}
+label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(180,130,255,.7);display:flex;align-items:center;gap:5px}
+input[type=file],input[type=text],textarea{background:rgba(0,0,0,.4);border:1px solid rgba(138,80,200,.25);border-radius:12px;padding:13px 16px;color:#e8e0f0;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;width:100%}
+input[type=text]:focus,textarea:focus{border-color:rgba(168,85,247,.6);box-shadow:0 0 0 3px rgba(168,85,247,.1)}
 input::placeholder,textarea::placeholder{color:rgba(180,130,255,.3)}
-textarea{resize:vertical;min-height:100px;line-height:1.6}
 input[type=file]{cursor:pointer;color:#c084fc}
-.btn-process{width:100%;padding:16px;background:linear-gradient(135deg,#9b4ddb,#7c3aed);border:none;border-radius:14px;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .2s;display:flex;align-items:center;justify-content:center;gap:10px}
-.btn-process:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 32px rgba(138,80,200,.4)}
-.btn-process:disabled{opacity:.6;cursor:not-allowed}
-.shimmer{position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);animation:shimmer 2.5s infinite}
-@keyframes shimmer{to{left:200%}}
+textarea{resize:vertical;min-height:90px;line-height:1.6}
+.btn{width:100%;padding:15px;background:linear-gradient(135deg,#9b4ddb,#7c3aed);border:none;border-radius:13px;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .15s,box-shadow .2s;position:relative;overflow:hidden}
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 28px rgba(138,80,200,.4)}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.shimmer{position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);animation:sh 2.5s infinite}
+@keyframes sh{to{left:200%}}
 
-/* PROGRESS BAR */
-.progress-container{display:none;background:rgba(0,0,0,.5);border:1px solid rgba(138,80,200,.2);border-radius:16px;padding:24px;gap:16px;flex-direction:column}
-.progress-container.visible{display:flex}
-.progress-header{display:flex;align-items:center;justify-content:space-between}
-.progress-label{font-size:13px;font-weight:600;color:#c084fc}
-.progress-pct{font-size:13px;font-weight:700;color:#c084fc;font-family:monospace}
-.progress-bar-track{width:100%;height:8px;background:rgba(138,80,200,.15);border-radius:4px;overflow:hidden}
-.progress-bar-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#c084fc);border-radius:4px;transition:width .4s ease;width:0%}
-.steps-row{display:flex;gap:0}
-.step{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;opacity:.3;transition:all .3s;position:relative}
-.step:not(:last-child)::after{content:'';position:absolute;right:0;top:14px;width:1px;height:18px;background:rgba(138,80,200,.2)}
-.step.active{opacity:1}
-.step.done{opacity:.7}
-.step-icon{width:32px;height:32px;border-radius:9px;background:rgba(138,80,200,.1);border:1px solid rgba(138,80,200,.2);display:flex;align-items:center;justify-content:center;font-size:15px;color:#c084fc;transition:all .3s}
-.step.active .step-icon{background:rgba(168,85,247,.2);border-color:rgba(168,85,247,.5);animation:pulse-step 1.5s infinite}
-.step.done .step-icon{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.3);color:#4ade80}
-@keyframes pulse-step{0%,100%{box-shadow:0 0 0 0 rgba(168,85,247,.3)}50%{box-shadow:0 0 0 5px rgba(168,85,247,0)}}
-.step-name{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(200,160,255,.6);text-align:center}
-.progress-msg{font-size:12px;color:rgba(180,130,255,.7);font-family:monospace;min-height:18px}
+/* Progress */
+.progress{display:none;flex-direction:column;gap:14px;background:rgba(0,0,0,.4);border:1px solid rgba(138,80,200,.2);border-radius:16px;padding:22px}
+.progress.on{display:flex}
+.prog-top{display:flex;justify-content:space-between;align-items:center}
+.prog-label{font-size:13px;color:#c084fc;font-weight:600}
+.prog-pct{font-size:13px;font-weight:700;color:#c084fc;font-family:monospace}
+.prog-track{width:100%;height:8px;background:rgba(138,80,200,.15);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#c084fc);border-radius:4px;transition:width .6s ease;width:0}
+.steps{display:flex}
+.step{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;opacity:.25;transition:all .4s;position:relative}
+.step:not(:last-child)::after{content:'';position:absolute;right:0;top:13px;width:1px;height:16px;background:rgba(138,80,200,.2)}
+.step.on{opacity:1}
+.step.ok{opacity:.65}
+.si{width:30px;height:30px;border-radius:8px;background:rgba(138,80,200,.1);border:1px solid rgba(138,80,200,.2);display:flex;align-items:center;justify-content:center;font-size:14px;color:#c084fc;transition:all .4s}
+.step.on .si{background:rgba(168,85,247,.2);border-color:rgba(168,85,247,.5);animation:glow 1.5s infinite}
+.step.ok .si{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.3);color:#4ade80}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(168,85,247,.3)}50%{box-shadow:0 0 0 5px rgba(168,85,247,0)}}
+.sn{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(200,160,255,.55);text-align:center}
+.prog-msg{font-size:11px;color:rgba(180,130,255,.6);font-family:monospace;min-height:16px}
 
-.error-box{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.2);border-radius:14px;padding:18px;display:none;color:#f87171;font-size:13px;line-height:1.6;white-space:pre-wrap}
-.error-box.visible{display:block}
-.result-card{background:rgba(34,197,94,.04);border:1px solid rgba(34,197,94,.2);border-radius:16px;padding:24px;display:none}
-.result-card.visible{display:block}
-.result-header{display:flex;align-items:center;gap:10px;margin-bottom:20px}
-.result-icon{width:36px;height:36px;background:rgba(34,197,94,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
-.result-title{font-size:15px;font-weight:700;color:#4ade80}
-.result-sub{font-size:12px;color:rgba(74,222,128,.5)}
-.audio-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(180,130,255,.5);margin-bottom:10px}
-.player-block{background:rgba(0,0,0,.4);border:1px solid rgba(138,80,200,.2);border-radius:12px;padding:14px 16px;margin-bottom:14px}
-.player-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:rgba(180,130,255,.5);margin-bottom:8px}
-.player-controls{display:flex;align-items:center;gap:10px}
-.play-btn{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#9b4ddb,#7c3aed);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s;color:#fff;font-size:14px}
-.play-btn:hover{transform:scale(1.08)}
-.player-track{flex:1}
-.track-bar{width:100%;height:4px;background:rgba(138,80,200,.2);border-radius:2px;overflow:hidden;margin-bottom:4px;cursor:pointer}
-.track-fill{height:100%;background:linear-gradient(90deg,#9b4ddb,#c084fc);width:0%;border-radius:2px;transition:width .1s linear}
-.track-time{font-size:10px;color:rgba(180,130,255,.4);font-family:monospace}
+.err{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.2);border-radius:13px;padding:16px;display:none;color:#f87171;font-size:13px;line-height:1.6;white-space:pre-wrap}
+.err.on{display:block}
+
+.result{background:rgba(34,197,94,.04);border:1px solid rgba(34,197,94,.2);border-radius:16px;padding:22px;display:none}
+.result.on{display:block}
+.res-head{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.res-icon{width:34px;height:34px;background:rgba(34,197,94,.15);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px}
+.res-title{font-size:15px;font-weight:700;color:#4ade80}
+.res-sub{font-size:11px;color:rgba(74,222,128,.5)}
+.alabel{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(180,130,255,.5);margin-bottom:9px}
+.player{background:rgba(0,0,0,.4);border:1px solid rgba(138,80,200,.2);border-radius:11px;padding:14px;margin-bottom:14px}
+.ptype{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(180,130,255,.45);margin-bottom:8px}
+.pctrl{display:flex;align-items:center;gap:10px}
+.pbtn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#9b4ddb,#7c3aed);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;flex-shrink:0;transition:transform .15s}
+.pbtn:hover{transform:scale(1.08)}
+.ptrack{flex:1}
+.pbar{width:100%;height:4px;background:rgba(138,80,200,.2);border-radius:2px;overflow:hidden;margin-bottom:4px;cursor:pointer}
+.pfill{height:100%;background:linear-gradient(90deg,#9b4ddb,#c084fc);width:0;border-radius:2px;transition:width .1s linear}
+.ptime{font-size:10px;color:rgba(180,130,255,.4);font-family:monospace}
 audio{display:none}
-.lyrics-compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
-.lyric-box{background:rgba(0,0,0,.3);border:1px solid rgba(138,80,200,.15);border-radius:12px;padding:14px}
-.lyric-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:rgba(180,130,255,.5);margin-bottom:8px}
-.lyric-text{font-size:13px;color:rgba(200,170,255,.8);line-height:1.7;white-space:pre-wrap}
-.download-btn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 20px;background:rgba(138,80,200,.15);border:1px solid rgba(138,80,200,.3);border-radius:10px;color:#c084fc;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s}
-.download-btn:hover{background:rgba(138,80,200,.25)}
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-thumb{background:rgba(138,80,200,.3);border-radius:2px}
-@media(max-width:600px){.lyrics-compare{grid-template-columns:1fr}.card-body{padding:20px}.steps-row{flex-wrap:wrap;gap:8px}}
+.dlbtn{display:inline-flex;align-items:center;gap:7px;margin-top:12px;padding:9px 18px;background:rgba(138,80,200,.15);border:1px solid rgba(138,80,200,.3);border-radius:9px;color:#c084fc;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s}
+.dlbtn:hover{background:rgba(138,80,200,.25)}
+.lyrics{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:14px}
+.lbox{background:rgba(0,0,0,.3);border:1px solid rgba(138,80,200,.15);border-radius:11px;padding:13px}
+.ltype{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(180,130,255,.45);margin-bottom:7px}
+.ltxt{font-size:12px;color:rgba(200,170,255,.8);line-height:1.7;white-space:pre-wrap}
+@media(max-width:580px){.lyrics{grid-template-columns:1fr}.card-body{padding:18px}.steps{flex-wrap:wrap;gap:6px}}
 </style>
 </head>
 <body>
-<div class="bg-mesh"></div>
+<div class="mesh"></div>
 <div class="app">
   <header class="header">
     <div class="logo">
       <div class="logo-icon">&#127925;</div>
       <div><div class="logo-text">LyricSwap</div><div class="logo-sub">AI Voice Remix</div></div>
     </div>
-    <div class="status-badge" id="statusBadge">
-      <div class="status-dot"></div>
-      <span id="statusText">Conectando...</span>
-    </div>
+    <div class="badge" id="badge"><div class="dot"></div><span id="btext">Conectando...</span></div>
   </header>
-  <div class="main-card">
-    <div class="card-header">
-      <div class="card-title">Reemplaza las letras de una cancion</div>
-      <div class="card-desc">Sube el audio — el pipeline separa beat, transcribe, reescribe con IA y sintetiza la nueva voz manteniendo el ritmo.</div>
+  <div class="card">
+    <div class="card-head">
+      <h2>Reemplaza las letras de una cancion</h2>
+      <p>Sube el audio — Demucs separa beat y voz, Whisper transcribe, Claude reescribe, ElevenLabs sintetiza, FFmpeg mezcla.</p>
     </div>
     <div class="card-body">
       <div class="field">
-        <div class="field-label"><i class="ti ti-upload"></i> Sube un archivo de audio</div>
-        <input type="file" id="songFile" accept="audio/*"/>
+        <label><i class="ti ti-upload"></i> Archivo de audio</label>
+        <input type="file" id="file" accept="audio/*"/>
       </div>
       <div class="field">
-        <div class="field-label"><i class="ti ti-pencil"></i> Nuevo tema o letra (opcional)</div>
-        <textarea id="newLyrics" placeholder="Describe el nuevo tema o escribe la letra. Si lo dejas vacio Claude genera una nueva manteniendo el estilo..."></textarea>
+        <label><i class="ti ti-pencil"></i> Nuevo tema o letra (opcional)</label>
+        <textarea id="theme" placeholder="Describe el nuevo tema o escribe la letra. Si lo dejas vacio Claude genera una nueva..."></textarea>
       </div>
       <div class="field">
-        <div class="field-label"><i class="ti ti-adjustments"></i> Instruccion de estilo (opcional)</div>
-        <input type="text" id="styleInstr" placeholder="Ej: en espanol chileno, mas oscuro, rima ABAB..."/>
+        <label><i class="ti ti-adjustments"></i> Estilo (opcional)</label>
+        <input type="text" id="style" placeholder="Ej: espanol chileno, mas oscuro, rima ABAB..."/>
       </div>
-      <button class="btn-process" id="btnProcess" onclick="processSong()">
+      <button class="btn" id="btn" onclick="run()">
         <div class="shimmer"></div>
         <i class="ti ti-player-play"></i> Procesar cancion
       </button>
 
-      <!-- PROGRESS -->
-      <div class="progress-container" id="progressContainer">
-        <div class="progress-header">
-          <span class="progress-label" id="progressLabel">Iniciando pipeline...</span>
-          <span class="progress-pct" id="progressPct">0%</span>
+      <div class="progress" id="prog">
+        <div class="prog-top">
+          <span class="prog-label" id="plabel">Procesando...</span>
+          <span class="prog-pct" id="ppct">0%</span>
         </div>
-        <div class="progress-bar-track">
-          <div class="progress-bar-fill" id="progressFill"></div>
+        <div class="prog-track"><div class="prog-fill" id="pfill"></div></div>
+        <div class="steps">
+          <div class="step" id="s0"><div class="si"><i class="ti ti-upload"></i></div><div class="sn">Upload</div></div>
+          <div class="step" id="s1"><div class="si"><i class="ti ti-wave-sine"></i></div><div class="sn">Demucs</div></div>
+          <div class="step" id="s2"><div class="si"><i class="ti ti-ear"></i></div><div class="sn">Whisper</div></div>
+          <div class="step" id="s3"><div class="si"><i class="ti ti-brain"></i></div><div class="sn">Claude</div></div>
+          <div class="step" id="s4"><div class="si"><i class="ti ti-microphone"></i></div><div class="sn">ElevenLabs</div></div>
+          <div class="step" id="s5"><div class="si"><i class="ti ti-device-speaker"></i></div><div class="sn">Mix</div></div>
         </div>
-        <div class="steps-row">
-          <div class="step" id="s-upload"><div class="step-icon"><i class="ti ti-upload"></i></div><div class="step-name">Upload</div></div>
-          <div class="step" id="s-demucs"><div class="step-icon"><i class="ti ti-wave-sine"></i></div><div class="step-name">Demucs</div></div>
-          <div class="step" id="s-whisper"><div class="step-icon"><i class="ti ti-ear"></i></div><div class="step-name">Whisper</div></div>
-          <div class="step" id="s-claude"><div class="step-icon"><i class="ti ti-brain"></i></div><div class="step-name">Claude</div></div>
-          <div class="step" id="s-elevenlabs"><div class="step-icon"><i class="ti ti-microphone"></i></div><div class="step-name">ElevenLabs</div></div>
-          <div class="step" id="s-mix"><div class="step-icon"><i class="ti ti-device-speaker"></i></div><div class="step-name">Mix</div></div>
-        </div>
-        <div class="progress-msg" id="progressMsg"></div>
+        <div class="prog-msg" id="pmsg"></div>
       </div>
 
-      <div class="error-box" id="errorBox"></div>
+      <div class="err" id="err"></div>
 
-      <div class="result-card" id="resultCard">
-        <div class="result-header">
-          <div class="result-icon">&#10003;</div>
-          <div><div class="result-title">Cancion procesada!</div><div class="result-sub">Escucha y descarga tu remix</div></div>
+      <div class="result" id="result">
+        <div class="res-head">
+          <div class="res-icon">&#10003;</div>
+          <div><div class="res-title">Cancion lista!</div><div class="res-sub">Escucha y descarga tu remix</div></div>
         </div>
-        <div class="audio-label">Remix</div>
-        <div class="player-block">
-          <div class="player-type">Nueva voz + beat original</div>
-          <div class="player-controls">
-            <button class="play-btn" onclick="togglePlay()" id="playBtn"><i class="ti ti-player-play"></i></button>
-            <div class="player-track">
-              <div class="track-bar" onclick="seekAudio(event)"><div class="track-fill" id="trackFill"></div></div>
-              <div class="track-time" id="trackTime">0:00 / 0:00</div>
+        <div class="alabel">Remix</div>
+        <div class="player">
+          <div class="ptype">Nueva voz + beat original</div>
+          <div class="pctrl">
+            <button class="pbtn" id="pbtn" onclick="play()"><i class="ti ti-player-play"></i></button>
+            <div class="ptrack">
+              <div class="pbar" onclick="seek(event)"><div class="pfill" id="pfill2"></div></div>
+              <div class="ptime" id="ptime">0:00 / 0:00</div>
             </div>
           </div>
-          <audio id="audioPlayer"></audio>
+          <audio id="audio"></audio>
         </div>
-        <a class="download-btn" id="downloadBtn" download="lyricswap_output.mp3"><i class="ti ti-download"></i> Descargar MP3</a>
-        <div class="lyrics-compare">
-          <div class="lyric-box"><div class="lyric-type">Original transcrita</div><div class="lyric-text" id="origLyrics">-</div></div>
-          <div class="lyric-box"><div class="lyric-type">Nueva letra generada</div><div class="lyric-text" id="newLyricsDisplay">-</div></div>
+        <a class="dlbtn" id="dl" download="lyricswap.mp3"><i class="ti ti-download"></i> Descargar MP3</a>
+        <div class="lyrics">
+          <div class="lbox"><div class="ltype">Original transcrita</div><div class="ltxt" id="orig">-</div></div>
+          <div class="lbox"><div class="ltype">Nueva letra</div><div class="ltxt" id="newl">-</div></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script>
-const API = '';
-let remixUrl = null;
+let blobUrl = null;
 
-async function checkStatus() {
-  try {
-    const r = await fetch(API + '/health');
-    const d = await r.json();
-    if (d.status) {
-      document.getElementById('statusText').textContent = 'API activa';
-    }
-  } catch(e) {
-    document.getElementById('statusText').textContent = 'Sin conexion';
-    const b = document.querySelector('.status-badge');
-    b.style.borderColor = 'rgba(248,113,113,.3)';
-    b.style.color = '#f87171';
-    b.style.background = 'rgba(248,113,113,.08)';
-    document.querySelector('.status-dot').style.background = '#f87171';
+fetch('/health').then(r=>r.json()).then(d=>{
+  if(d.status){document.getElementById('btext').textContent='API activa';}
+}).catch(()=>{
+  document.getElementById('btext').textContent='Sin conexion';
+  document.querySelector('.dot').style.background='#f87171';
+});
+
+const MSGS = ['Subiendo archivo...','Demucs separando beat y voz (2-4 min)...','Whisper transcribiendo...','Claude reescribiendo letra...','ElevenLabs sintetizando voz...','FFmpeg mezclando...'];
+const PCTS = [5, 15, 55, 65, 80, 92];
+let timer = null;
+let step = 0;
+
+function setStep(i, state){
+  for(let j=0;j<6;j++){
+    const el = document.getElementById('s'+j);
+    if(j < i) el.className='step ok';
+    else if(j === i) el.className='step on';
+    else el.className='step';
   }
 }
-
-const STEPS = ['upload','demucs','whisper','claude','elevenlabs','mix'];
-function setStep(step, state) {
-  STEPS.forEach(s => {
-    const el = document.getElementById('s-' + s);
-    if (!el) return;
-    if (s === step) el.className = 'step ' + state;
-    else if (state === 'active' && STEPS.indexOf(s) < STEPS.indexOf(step)) el.className = 'step done';
-  });
+function setProg(pct, msg){
+  document.getElementById('pfill').style.width = pct+'%';
+  document.getElementById('ppct').textContent = pct+'%';
+  if(msg) { document.getElementById('plabel').textContent = msg; document.getElementById('pmsg').textContent = msg; }
 }
-function setProgress(pct, label, msg) {
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressPct').textContent = pct + '%';
-  if (label) document.getElementById('progressLabel').textContent = label;
-  if (msg) document.getElementById('progressMsg').textContent = msg;
+function startProgressSim(){
+  step = 0;
+  setProg(PCTS[0], MSGS[0]);
+  setStep(0, 'on');
+  let i = 1;
+  timer = setInterval(()=>{
+    if(i >= 6) return;
+    step = i;
+    setProg(PCTS[i], MSGS[i]);
+    setStep(i, 'on');
+    i++;
+  }, i === 1 ? 1000 : 30000);
+  // Demucs tarda ~3 min, avanzamos lento
+  clearInterval(timer);
+  timer = null;
+  // Manual ticks
+  setTimeout(()=>{ setProg(15,'Demucs separando beat y voz...'); setStep(1,'on'); }, 1500);
 }
+function stopSim(){ if(timer){clearInterval(timer);timer=null;} }
 
-function fmtTime(s) { return Math.floor(s/60) + ':' + String(Math.floor(s%60)).padStart(2,'0'); }
-
-function setupAudio(url) {
-  const audio = document.getElementById('audioPlayer');
-  audio.src = url;
-  audio.ontimeupdate = () => {
-    if (!audio.duration) return;
-    document.getElementById('trackFill').style.width = (audio.currentTime/audio.duration*100) + '%';
-    document.getElementById('trackTime').textContent = fmtTime(audio.currentTime) + ' / ' + fmtTime(audio.duration);
-  };
-  audio.onended = () => { document.getElementById('playBtn').innerHTML = '<i class="ti ti-player-play"></i>'; };
+function fmt(s){ return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0'); }
+function play(){
+  const a = document.getElementById('audio');
+  const b = document.getElementById('pbtn');
+  if(!a.src) return;
+  if(a.paused){ a.play(); b.innerHTML='<i class="ti ti-player-pause"></i>'; }
+  else{ a.pause(); b.innerHTML='<i class="ti ti-player-play"></i>'; }
 }
-
-function togglePlay() {
-  const audio = document.getElementById('audioPlayer');
-  const btn = document.getElementById('playBtn');
-  if (!audio.src) return;
-  if (audio.paused) { audio.play(); btn.innerHTML = '<i class="ti ti-player-pause"></i>'; }
-  else { audio.pause(); btn.innerHTML = '<i class="ti ti-player-play"></i>'; }
+function seek(e){
+  const a = document.getElementById('audio');
+  if(!a.duration) return;
+  a.currentTime = (e.offsetX/e.currentTarget.offsetWidth)*a.duration;
 }
+document.getElementById('audio').ontimeupdate = function(){
+  const a = this;
+  if(!a.duration) return;
+  document.getElementById('pfill2').style.width=(a.currentTime/a.duration*100)+'%';
+  document.getElementById('ptime').textContent=fmt(a.currentTime)+' / '+fmt(a.duration);
+};
+document.getElementById('audio').onended = function(){
+  document.getElementById('pbtn').innerHTML='<i class="ti ti-player-play"></i>';
+};
 
-function seekAudio(e) {
-  const audio = document.getElementById('audioPlayer');
-  if (!audio.duration) return;
-  audio.currentTime = (e.offsetX / e.currentTarget.offsetWidth) * audio.duration;
-}
+async function run(){
+  const file = document.getElementById('file').files[0];
+  const theme = document.getElementById('theme').value.trim();
+  const style = document.getElementById('style').value.trim();
+  if(!file){ alert('Sube un archivo de audio primero po!'); return; }
 
-function showError(msg) {
-  const box = document.getElementById('errorBox');
-  box.textContent = msg;
-  box.classList.add('visible');
-}
+  document.getElementById('prog').classList.add('on');
+  document.getElementById('result').classList.remove('on');
+  document.getElementById('err').classList.remove('on');
+  document.getElementById('btn').disabled = true;
 
-async function processSong() {
-  const file = document.getElementById('songFile').files[0];
-  const lyrics = document.getElementById('newLyrics').value.trim();
-  const style = document.getElementById('styleInstr').value.trim();
-  if (!file) { showError('Sube un archivo de audio primero po!'); return; }
+  startProgressSim();
 
-  document.getElementById('progressContainer').classList.add('visible');
-  document.getElementById('resultCard').classList.remove('visible');
-  document.getElementById('errorBox').classList.remove('visible');
-  document.getElementById('btnProcess').disabled = true;
-  STEPS.forEach(s => { const el = document.getElementById('s-'+s); if(el) el.className='step'; });
-  setProgress(0, 'Iniciando...', '');
-
-  const theme = lyrics || style || 'Reescribe la letra con estilo fresco y moderno manteniendo el ritmo y metrica exacta';
   const fd = new FormData();
   fd.append('audio', file);
-  fd.append('theme', theme);
+  fd.append('theme', theme || style || 'Reescribe con estilo fresco y moderno manteniendo el ritmo y metrica exacta');
   fd.append('language', 'es');
 
   try {
-    const resp = await fetch(API + '/swap-stream', { method: 'POST', body: fd });
-    if (!resp.ok) {
-      const err = await resp.json().catch(() => ({detail: 'Error ' + resp.status}));
-      throw new Error(typeof err.detail === 'string' ? err.detail : JSON.stringify(err.detail));
+    const resp = await fetch('/swap', {method:'POST', body:fd});
+
+    stopSim();
+
+    if(!resp.ok){
+      let msg = 'Error '+resp.status;
+      try{
+        const d = await resp.json();
+        msg = typeof d.detail === 'string' ? d.detail : JSON.stringify(d.detail);
+      }catch(e){}
+      throw new Error(msg);
     }
 
-    const reader = resp.body.getReader();
-    const decoder = new TextDecoder();
-    let buffer = '';
+    // Pasos finales
+    setProg(92,'Mezclando voz y beat...'); setStep(5,'on');
+    await new Promise(r=>setTimeout(r,500));
+    setProg(100,'Listo!');
+    for(let i=0;i<6;i++) document.getElementById('s'+i).className='step ok';
 
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-      const parts = buffer.split('\n\n');
-      buffer = parts.pop();
-      for (const part of parts) {
-        const lines = part.split('\n');
-        let event = '', data = '';
-        for (const line of lines) {
-          if (line.startsWith('event: ')) event = line.slice(7).trim();
-          if (line.startsWith('data: ')) data = line.slice(6).trim();
-        }
-        if (!event || !data) continue;
-        const d = JSON.parse(data);
+    const blob = await resp.blob();
+    if(blobUrl) URL.revokeObjectURL(blobUrl);
+    blobUrl = URL.createObjectURL(blob);
 
-        if (event === 'progress') {
-          setStep(d.step, 'active');
-          setProgress(d.pct, d.msg, d.msg);
-        } else if (event === 'done') {
-          setProgress(100, '¡Cancion lista!', '');
-          STEPS.forEach(s => { const el = document.getElementById('s-'+s); if(el) el.className='step done'; });
-          // Descargar el audio
-          const audioResp = await fetch(API + '/download/' + d.session_id);
-          const blob = await audioResp.blob();
-          if (remixUrl) URL.revokeObjectURL(remixUrl);
-          remixUrl = URL.createObjectURL(blob);
-          setupAudio(remixUrl);
-          document.getElementById('downloadBtn').href = remixUrl;
-          if (d.original_lyrics) document.getElementById('origLyrics').textContent = d.original_lyrics;
-          if (d.new_lyrics) document.getElementById('newLyricsDisplay').textContent = d.new_lyrics;
-          document.getElementById('resultCard').classList.add('visible');
-          document.getElementById('progressContainer').classList.remove('visible');
-        } else if (event === 'error') {
-          throw new Error(d.msg);
-        }
-      }
-    }
-  } catch(e) {
-    showError('Error: ' + e.message);
-    document.getElementById('progressContainer').classList.remove('visible');
+    const oL = decodeURIComponent(resp.headers.get('X-Original-Lyrics')||'');
+    const nL = decodeURIComponent(resp.headers.get('X-New-Lyrics')||'');
+
+    document.getElementById('audio').src = blobUrl;
+    document.getElementById('dl').href = blobUrl;
+    if(oL) document.getElementById('orig').textContent = oL;
+    if(nL) document.getElementById('newl').textContent = nL;
+
+    document.getElementById('result').classList.add('on');
+    document.getElementById('prog').classList.remove('on');
+
+  } catch(e){
+    stopSim();
+    document.getElementById('prog').classList.remove('on');
+    const box = document.getElementById('err');
+    box.textContent = 'Error: ' + e.message;
+    box.classList.add('on');
   } finally {
-    document.getElementById('btnProcess').disabled = false;
+    document.getElementById('btn').disabled = false;
   }
 }
-
-checkStatus();
 </script>
 </body>
 </html>
