@@ -53,7 +53,7 @@ async def swap_lyrics(
         demucs_output = session_dir / "demucs"
         demucs_output.mkdir(exist_ok=True)
         proc = subprocess.run(
-            ["python", "-m", "demucs", "--two-stems=vocals", "-o", str(demucs_output), str(original_path)],
+            ["python", "-m", "demucs", "--two-stems=vocals", "--jobs", "1", "-o", str(demucs_output), str(original_path)],
             capture_output=True, text=True, timeout=900
         )
         vocals_path = next(demucs_output.rglob("vocals.wav"), None)
