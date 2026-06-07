@@ -1,6 +1,5 @@
 FROM python:3.11-slim
 
-# Instalar ffmpeg y dependencias del sistema
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     libsndfile1 \
@@ -10,18 +9,19 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copiar requirements primero para aprovechar caché de Docker
+# Instalar torch CPU primero (wheels precompilados)
+RUN pip install --upgrade pip setuptools==68.2.2 wheel && \
+    pip install torch==2.3.0+cpu torchaudio==2.3.0+cpu \
+    --index-url https://download.pytorch.org/whl/cpu
+
+# Instalar whisper desde GitHub (evita el problema de build wheel)
+RUN pip install git+https://github.com/openai/whisper.git
+
+# Copiar e instalar el resto de dependencias
 COPY requirements.txt .
+RUN pip install -r requirements.txt
 
-# Instalar dependencias Python
-RUN pip install --upgrade pip setuptools wheel && \
-    pip install --extra-index-url https://download.pytorch.org/whl/cpu \
-    torch==2.3.0+cpu torchaudio==2.3.0+cpu && \
-    pip install -r requirements.txt
-
-# Copiar código
 COPY . .
 
 EXPOSE 8080
-
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
