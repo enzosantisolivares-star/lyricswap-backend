@@ -6,12 +6,18 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
+# Instalar numpy primero en version compatible
 RUN pip install --upgrade pip setuptools==68.2.2 wheel && \
-    pip install torch==2.3.0+cpu torchaudio==2.3.0+cpu \
+    pip install "numpy>=1.24,<2.0"
+
+# Instalar torch CPU (usa el numpy ya instalado)
+RUN pip install torch==2.3.0+cpu torchaudio==2.3.0+cpu \
     --index-url https://download.pytorch.org/whl/cpu
 
+# Instalar whisper desde git
 RUN pip install git+https://github.com/openai/whisper.git
 
+# Instalar resto de dependencias
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
