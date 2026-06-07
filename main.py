@@ -61,7 +61,7 @@ async def swap_lyrics(
         no_vocals_path = next(demucs_output.rglob("no_vocals.wav"), None)
         if not vocals_path or not no_vocals_path:
             all_files = [str(p) for p in demucs_output.rglob("*")]
-            raise HTTPException(status_code=500, detail=f"Demucs no generó archivos. stderr: {result.stderr[-300:]} files: {all_files[:5]}")
+            raise HTTPException(status_code=500, detail=f"Demucs no generÃ³ archivos. stderr: {result.stderr[-300:]} files: {all_files[:5]}")
 
         model = get_whisper_model()
         transcription = model.transcribe(str(vocals_path), language=language)
@@ -70,7 +70,7 @@ async def swap_lyrics(
             raise HTTPException(status_code=400, detail="No se pudo transcribir")
 
         client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-        prompt = f"Reescribe esta letra manteniendo el ritmo y métrica exacta.\nLETRA ORIGINAL:\n{original_lyrics}\nNUEVO TEMA:\n{theme}\nResponde SOLO la nueva letra."
+        prompt = f"Reescribe esta letra manteniendo el ritmo y mÃ©trica exacta.\nLETRA ORIGINAL:\n{original_lyrics}\nNUEVO TEMA:\n{theme}\nResponde SOLO la nueva letra."
         message = client.messages.create(model="claude-opus-4-5", max_tokens=2048, messages=[{"role": "user", "content": prompt}])
         new_lyrics = message.content[0].text.strip()
 
@@ -127,9 +127,9 @@ async def swap_lyrics_stream(
         session_dir.mkdir(exist_ok=True)
         try:
             yield sse("progress", {"step": "upload", "pct": 5, "msg": "Archivo recibido, separando stems..."})
-            original_path = session_dir / f"original{Path(audio.filename).suffix}"
+            original_path = session_dir / f"original{Path(audio_filename).suffix}"
             with open(original_path, "wb") as f:
-                f.write(await audio.read())
+                f.write(audio_bytes)
 
             yield sse("progress", {"step": "demucs", "pct": 15, "msg": "Demucs separando voz del beat..."})
             demucs_output = session_dir / "demucs"
@@ -157,7 +157,7 @@ async def swap_lyrics_stream(
             no_vocals_path = next(demucs_output.rglob("no_vocals.wav"), None)
             if not vocals_path or not no_vocals_path:
                 all_files = [str(p) for p in demucs_output.rglob("*")]
-                yield sse("error", {"msg": f"Demucs no generó archivos. Files: {all_files[:5]}"})
+                yield sse("error", {"msg": f"Demucs no generÃ³ archivos. Files: {all_files[:5]}"})
                 return
 
             yield sse("progress", {"step": "whisper", "pct": 55, "msg": "Whisper transcribiendo la voz..."})
@@ -170,7 +170,7 @@ async def swap_lyrics_stream(
 
             yield sse("progress", {"step": "claude", "pct": 65, "msg": "Claude reescribiendo la letra..."})
             client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-            prompt = f"Reescribe esta letra manteniendo el ritmo y métrica exacta.\nLETRA ORIGINAL:\n{original_lyrics}\nNUEVO TEMA:\n{theme}\nResponde SOLO la nueva letra."
+            prompt = f"Reescribe esta letra manteniendo el ritmo y mÃ©trica exacta.\nLETRA ORIGINAL:\n{original_lyrics}\nNUEVO TEMA:\n{theme}\nResponde SOLO la nueva letra."
             message = client.messages.create(model="claude-opus-4-5", max_tokens=2048, messages=[{"role": "user", "content": prompt}])
             new_lyrics = message.content[0].text.strip()
 
@@ -202,13 +202,13 @@ async def swap_lyrics_stream(
 
             yield sse("done", {
                 "pct": 100,
-                "msg": "¡Canción lista!",
+                "msg": "Â¡CanciÃ³n lista!",
                 "session_id": session_id,
                 "original_lyrics": original_lyrics[:500],
                 "new_lyrics": new_lyrics[:500]
             })
         except asyncio.TimeoutError:
-            yield sse("error", {"msg": "Timeout — el audio es muy largo, intenta con uno más corto"})
+            yield sse("error", {"msg": "Timeout â el audio es muy largo, intenta con uno mÃ¡s corto"})
         except Exception as e:
             yield sse("error", {"msg": str(e)})
 
