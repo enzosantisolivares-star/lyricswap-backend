@@ -1,8 +1,5 @@
 [phases.setup]
-nixPkgs = ["ffmpeg", "python311", "libsndfile", "sox"]
-
-[phases.install]
-cmds = ["pip install -r requirements.txt"]
+nixPkgs = ["ffmpeg", "python311", "python311Packages.pip", "libsndfile"]
 
 [start]
 cmd = "uvicorn main:app --host 0.0.0.0 --port $PORT"
