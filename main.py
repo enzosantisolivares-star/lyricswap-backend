@@ -47,9 +47,9 @@ async def swap_lyrics(
     session_dir = TEMP_DIR / session_id
     session_dir.mkdir(exist_ok=True)
     try:
-        original_path = session_dir / f"original{Path(audio.filename).suffix}"
+        original_path = session_dir / f"original{Path(audio_filename).suffix}"
         with open(original_path, "wb") as f:
-            f.write(await audio.read())
+            f.write(audio_bytes)
 
         demucs_output = session_dir / "demucs"
         demucs_output.mkdir(exist_ok=True)
@@ -119,6 +119,8 @@ async def swap_lyrics_stream(
     voice_id: str = Form("21m00Tcm4TlvDq8ikWAM"),
     language: str = Form("es"),
 ):
+    audio_bytes = await audio.read()
+    audio_filename = audio.filename
     async def generate():
         session_id = str(uuid.uuid4())
         session_dir = TEMP_DIR / session_id
