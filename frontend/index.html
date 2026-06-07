@@ -542,7 +542,7 @@ async function processSong() {
       setStep('upload', 'active');
       addLog('Procesando URL...', 'info');
     }
-    if (lyrics) // new_lyrics maps to theme
+    const theme = lyrics || style || 'Reescribe con estilo fresco manteniendo ritmo y metrica';    formData.append('theme', theme);    formData.append('language', 'es');
     if (style) 
 
     setStep('upload', 'done');
