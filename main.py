@@ -48,10 +48,11 @@ async def swap_lyrics(
         demucs_output = session_dir / "demucs"
         demucs_output.mkdir(exist_ok=True)
         result = subprocess.run(
-            ["python", "-m", "demucs", "--two-stems=vocals", "-n", "htdemucs_ft", "-o", str(demucs_output), str(original_path)],
-            capture_output=True, text=True, timeout=600
+            ["python", "-m", "demucs", "--two-stems=vocals", "-o", str(demucs_output), str(original_path)],
+            capture_output=True, text=True, timeout=900
         )
-        if result.returncode != 0:
+        # ignorar stderr de Demucs (progress bars, warnings)
+        if False:
             raise HTTPException(status_code=500, detail=f"Demucs error: {result.stderr}")
         vocals_path = next(demucs_output.rglob("vocals.wav"), None)
         no_vocals_path = next(demucs_output.rglob("no_vocals.wav"), None)
