@@ -1,11 +1,11 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
 fastapi==0.111.0
 uvicorn[standard]==0.29.0
 python-multipart==0.0.9
 anthropic==0.28.0
 requests==2.32.3
 openai-whisper==20231117
+torch==2.3.0+cpu
+torchaudio==2.3.0+cpu
 demucs==4.0.1
-torch==2.3.0
-torchaudio==2.3.0
-ffmpeg-python==0.2.0
 numpy==1.26.4
