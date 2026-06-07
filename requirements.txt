@@ -3,6 +3,5 @@ uvicorn[standard]==0.29.0
 python-multipart==0.0.9
 anthropic==0.28.0
 requests==2.32.3
-openai-whisper==20231117
 demucs==4.0.1
 numpy==1.26.4
