@@ -51,7 +51,7 @@ async def swap_lyrics(
             ["python", "-m", "demucs", "--two-stems=vocals", "-o", str(demucs_output), str(original_path)],
             capture_output=True, text=True, timeout=300
         )
-        if result.returncode != 0:
+        if result.returncode != 0 and 'error' in result.stderr.lower() and 'userwarning' not in result.stderr.lower():
             raise HTTPException(status_code=500, detail=f"Demucs error: {result.stderr}")
         vocals_path = next(demucs_output.rglob("vocals.wav"), None)
         no_vocals_path = next(demucs_output.rglob("no_vocals.wav"), None)
